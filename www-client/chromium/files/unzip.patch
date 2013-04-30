@@ -1,0 +1,19 @@
+diff --git a/components/zip/zip_reader.h b/components/zip/zip_reader.h
+index 0bb171c..99a96c1 100644
+--- a/components/zip/zip_reader.h
++++ b/components/zip/zip_reader.h
+@@ -14,11 +14,11 @@
+ #include "base/platform_file.h"
+ #include "base/time.h"
+ 
+-#if defined(USE_SYSTEM_MINIZIP)
++/*#if defined(USE_SYSTEM_MINIZIP)*/
+ #include <minizip/unzip.h>
+-#else
++/*#else
+ #include "third_party/zlib/contrib/minizip/unzip.h"
+-#endif
++#endif*/
+ 
+ namespace zip {
+ 
