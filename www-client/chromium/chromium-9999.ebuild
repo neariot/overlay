@@ -139,7 +139,7 @@ src_unpack() {
 
 	mkdir -p "${S}" || die
 	einfo "Copying source to ${S}"
-	rsync -rlpgo --exclude=".svn/" --exclude="third_party/WebKit/LayoutTests/"  --exclude="third_party/WebKit/ManualTests/"  --exclude="third_party/WebKit/PerformanceTests" /src/ "${S}" || die
+	rsync -rlpgo --exclude=".svn/" --exclude="third_party/WebKit/LayoutTests/"  --exclude="third_party/WebKit/ManualTests/"  --exclude="third_party/WebKit/PerformanceTests/" src/ "${S}" || die
 
 	# Display correct svn revision in about box, and log new version.
 	echo "LASTCHANGE=${ESVN_WC_REVISION}" > "${S}"/build/util/LASTCHANGE || die
