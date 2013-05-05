@@ -188,6 +188,8 @@ src_prepare() {
 
 # Remove most bundled libraries. Some are still needed.
 	find third_party -type f \! -iname '*.gyp*' \
+                \! -path 'third_party/flac/*' \
+                \! -path 'third_party/speex/*' \
                 \! -path 'third_party/snappy/*' \
                 \! -path 'third_party/libwebp/*' \
                 \! -path 'third_party/harfbuzz-ng/*' \
