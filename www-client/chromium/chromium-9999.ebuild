@@ -412,12 +412,8 @@ src_compile() {
 	fi
 
 	# See bug #410883 for more info about the .host mess.
-	emake ${make_targets} BUILDTYPE=Release V=1 \
-		CC.host="${BUILD_CC}" CFLAGS.host="${BUILD_CFLAGS}" \
-		CXX.host="${BUILD_CXX}" CXXFLAGS.host="${BUILD_CXXFLAGS}" \
-		LINK.host="${BUILD_CXX}" LDFLAGS.host="${BUILD_LDFLAGS}" \
-		AR.host="${BUILD_AR}" || die
-
+        export    BUILDTYPE=Release V=1 CC.host="${BUILD_CC}" CFLAGS.host="${BUILD_CFLAGS}" CXX.host="${BUILD_CXX}" CXXFLAGS.host="${BUILD_CXXFLAGS}" LINK.host="${BUILD_CXX}" LDFLAGS.host="${BUILD_LDFLAGS}" 	AR.host="${BUILD_AR}" 
+        ninja -j3  -v  -C  out/Release  ${make_targets}
 	pax-mark m out/Release/chrome
 	if use test; then
 		for x in $test_targets; do
