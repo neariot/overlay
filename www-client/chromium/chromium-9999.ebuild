@@ -47,7 +47,8 @@ RDEPEND="app-accessibility/speech-dispatcher
         media-libs/libpng
 	>=media-libs/libwebp-0.2.0_rc1
 	!x86? ( media-libs/mesa[gles2] )
-	media-libs/opus
+	dev-util/ninja
+        media-libs/opus
 	media-libs/speex
 	pulseaudio? ( media-sound/pulseaudio )
 	system-ffmpeg? ( || (
