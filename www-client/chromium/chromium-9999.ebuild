@@ -393,7 +393,7 @@ src_configure() {
 
 	# Tools for building programs to be executed on the build system, bug #410883.
 	tc-export_build_env BUILD_AR BUILD_CC BUILD_CXX
-
+        export GYP_GENERATORS=ninja
 	egyp_chromium ${myconf} || die
 }
 
@@ -413,7 +413,7 @@ src_compile() {
 	fi
 
 	# See bug #410883 for more info about the .host mess.
-        export    BUILDTYPE=Release V=1 CC.host="${BUILD_CC}" CFLAGS.host="${BUILD_CFLAGS}" CXX.host="${BUILD_CXX}" CXXFLAGS.host="${BUILD_CXXFLAGS}" LINK.host="${BUILD_CXX}" LDFLAGS.host="${BUILD_LDFLAGS}" 	AR.host="${BUILD_AR}" 
+        #export    BUILDTYPE=Release V=1 CC.host="${BUILD_CC}" CFLAGS.host="${BUILD_CFLAGS}" CXX.host="${BUILD_CXX}" CXXFLAGS.host="${BUILD_CXXFLAGS}" LINK.host="${BUILD_CXX}" LDFLAGS.host="${BUILD_LDFLAGS}" 	AR.host="${BUILD_AR}" 
         ninja -j3  -v  -C  out/Release  ${make_targets}
 	pax-mark m out/Release/chrome
 	if use test; then
