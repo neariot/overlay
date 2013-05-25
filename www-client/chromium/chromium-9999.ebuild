@@ -180,10 +180,8 @@ src_prepare() {
 #	rm -rf /var/portage/chromium/*
 #       ln -sf /var/portage/chromium out
          
-       # epatch "${FILESDIR}/unzip.patch"
-        epatch "${FILESDIR}/${PN}-gpsd-r0.patch"
-        epatch "${FILESDIR}/${PN}-system-ffmpeg-r4.patch"
-        #epatch "${FILESDIR}/${PN}-smhasher-r0.patch"
+        epatch "${FILESDIR}/gpsd.patch"
+        epatch "${FILESDIR}/system-ffmpeg.patch"
         
 	epatch_user
 

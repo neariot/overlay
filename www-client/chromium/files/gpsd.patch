@@ -1,5 +1,7 @@
---- build/linux/system.gyp.orig	2013-01-28 16:03:43.709477316 +0000
-+++ build/linux/system.gyp	2013-01-28 16:06:14.210254835 +0000
+diff --git a/build/linux/system.gyp b/build/linux/system.gyp~
+index 49acd65..8a4d66c 100644
+--- a/build/linux/system.gyp
++++ b/build/linux/system.gyp
 @@ -175,9 +175,6 @@
                           'gps_open',
                           'gps_close',
