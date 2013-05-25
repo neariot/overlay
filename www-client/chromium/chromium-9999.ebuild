@@ -489,7 +489,7 @@ src_install() {
 		insinto "${CHROMIUM_HOME}"
 	fi
 
-	newexe "${FILESDIR}"/chromium-launcher-r2.sh chromium-launcher.sh || die
+	newexe "${FILESDIR}"/chromium-launcher.sh chromium-launcher.sh || die
 	if [[ "${CHROMIUM_SUFFIX}" != "" ]]; then
 		sed "s:chromium-browser:chromium-browser${CHROMIUM_SUFFIX}:g" \
 			-i "${ED}"/"${CHROMIUM_HOME}"/chromium-launcher.sh || die
