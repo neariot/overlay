@@ -18,7 +18,7 @@ ESVN_REPO_URI="http://src.chromium.org/svn/trunk/src"
 SLOT="0"
 LICENSE="BSD"
 KEYWORDS=""
-IUSE="bindist cups gnome gnome-keyring gps kerberos pulseaudio selinux system-ffmpeg tcmalloc"
+IUSE="bindist cups gnome gnome-keyring gps kerberos ninja pulseaudio selinux system-ffmpeg tcmalloc"
 
 RDEPEND="app-accessibility/speech-dispatcher
 	app-arch/bzip2
@@ -33,7 +33,8 @@ RDEPEND="app-accessibility/speech-dispatcher
 	>=dev-libs/libevent-1.4.13
 	dev-libs/libxml2[icu]
 	dev-libs/libxslt
-	dev-libs/nspr
+	ninja? ( dev-util/ninja )
+        dev-libs/nspr
 	>=dev-libs/nss-3.12.3
 	dev-libs/protobuf
 	dev-libs/re2
@@ -47,7 +48,6 @@ RDEPEND="app-accessibility/speech-dispatcher
         media-libs/libpng
 	>=media-libs/libwebp-0.2.0_rc1
 	!x86? ( media-libs/mesa[gles2] )
-	dev-util/ninja
         media-libs/opus
 	media-libs/speex
 	pulseaudio? ( media-sound/pulseaudio )
@@ -391,8 +391,12 @@ src_configure() {
 
 	# Tools for building programs to be executed on the build system, bug #410883.
 	tc-export_build_env BUILD_AR BUILD_CC BUILD_CXX
-        export GYP_GENERATORS=ninja
-	egyp_chromium ${myconf} || die
+        
+        if use ninja; then
+        GYP_GENERATORS=ninja egyp_chromium ${myconf} || die
+        esle
+        GYP_GENERATORS=make egyp_chromium ${myconf} || die
+        fi
 }
 
 src_compile() {
@@ -410,10 +414,14 @@ src_compile() {
 		make_targets+=$test_targets
 	fi
 
-	# See bug #410883 for more info about the .host mess.
-        #export    BUILDTYPE=Release V=1 CC.host="${BUILD_CC}" CFLAGS.host="${BUILD_CFLAGS}" CXX.host="${BUILD_CXX}" CXXFLAGS.host="${BUILD_CXXFLAGS}" LINK.host="${BUILD_CXX}" LDFLAGS.host="${BUILD_LDFLAGS}" 	AR.host="${BUILD_AR}" 
-        ninja -j3  -v  -C  out/Release  ${make_targets}
-	pax-mark m out/Release/chrome
+        if use ninja; then
+        ninja ${MAKEOPTS} -v  -C  out/Release  ${make_targets} || die
+	else
+        #see bug #410883 for more info about the .host mess.
+        emake ${make_targets} BUILDTYPE=Release V=1 || die
+        fi
+        
+        pax-mark m out/Release/chrome
 	if use test; then
 		for x in $test_targets; do
 			pax-mark m out/Release/${x}
