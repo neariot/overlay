@@ -392,10 +392,10 @@ src_configure() {
 	# Tools for building programs to be executed on the build system, bug #410883.
 	tc-export_build_env BUILD_AR BUILD_CC BUILD_CXX
         
-        if use ninja; then
-        GYP_GENERATORS=ninja egyp_chromium ${myconf} || die
-        esle
-        GYP_GENERATORS=make egyp_chromium ${myconf} || die
+        if ! use ninja; then
+        GYP_GENERATORS=make egyp_chromium ${myconf} || die;
+        else
+        egyp_chromium ${myconf};
         fi
 }
 
