@@ -182,11 +182,13 @@ src_prepare() {
          
         epatch "${FILESDIR}/gpsd.patch"
         epatch "${FILESDIR}/system-ffmpeg.patch"
-        
 	epatch_user
+        
+    touch build/util/LASTCHANGE.blink
 
 # Remove most bundled libraries. Some are still needed.
 	find third_party -type f \! -iname '*.gyp*' \
+                \! -path 'third_party/lzma_sdk/*' \
                 \! -path 'third_party/flac/*' \
                 \! -path 'third_party/speex/*' \
                 \! -path 'third_party/snappy/*' \
@@ -303,10 +305,10 @@ src_configure() {
                 $(gyp_use system-ffmpeg use_system_ffmpeg)"
                 #-Dcomponent=shared_library      -Duse_system_zlib=1 "
 	# TODO: Use system mesa on x86, bug #457130 .
-	if ! use x86; then
-		myconf+="
-			-Duse_system_mesa=1"
-	fi
+#	if ! use x86; then
+#		myconf+="
+#			-Duse_system_mesa=1"
+#	fi
 
 	# Optional dependencies.
 	# TODO: linux_link_kerberos, bug #381289.
