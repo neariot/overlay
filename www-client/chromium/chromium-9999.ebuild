@@ -189,6 +189,7 @@ src_prepare() {
 
 # Remove most bundled libraries. Some are still needed.
 	find third_party -type f \! -iname '*.gyp*' \
+                \! -path 'third_party/usrsctp/*' \
                 \! -path 'third_party/lzma_sdk/*' \
                 \! -path 'third_party/flac/*' \
                 \! -path 'third_party/speex/*' \
