@@ -30,7 +30,8 @@ RDEPEND="app-accessibility/speech-dispatcher
 	dev-libs/expat
 	>=dev-libs/icu-49.1.1-r1:=
 	dev-libs/jsoncpp
-	>=dev-libs/libevent-1.4.13
+	dev-perl/JSON 
+        >=dev-libs/libevent-1.4.13
 	dev-libs/libxml2[icu]
 	dev-libs/libxslt
 	ninja? ( dev-util/ninja )
@@ -135,9 +136,9 @@ src_unpack() {
 
 	# Remove any lingering nacl toolchain files.
 	rm -rf src/native_client/toolchain/linux_x86_newlib
-
+        export webkit_reversion=$(svn info src/third_party/WebKit | grep "Revision" | awk '{print $2}')
 	subversion_wc_info
-
+        
 	mkdir -p "${S}" || die
 	einfo "Copying source to ${S}"
 	rsync -rlpgo --exclude=".svn/" --exclude="third_party/WebKit/LayoutTests/"  --exclude="third_party/WebKit/ManualTests/"  --exclude="third_party/WebKit/PerformanceTests/" src/ "${S}" || die
@@ -184,7 +185,7 @@ src_prepare() {
         epatch "${FILESDIR}/system-ffmpeg.patch"
 	epatch_user
         
-    touch build/util/LASTCHANGE.blink
+    echo LASTCHANGE=$webkit_reversion >  build/util/LASTCHANGE.blink
 
 # Remove most bundled libraries. Some are still needed.
 	find third_party -type f \! -iname '*.gyp*' \
