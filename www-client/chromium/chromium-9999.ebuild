@@ -308,10 +308,11 @@ src_configure() {
                 $(gyp_use system-ffmpeg use_system_ffmpeg)"
                 #-Dcomponent=shared_library      -Duse_system_zlib=1 "
 	# TODO: Use system mesa on x86, bug #457130 .
-	if ! use x86; then
-		myconf+="
-			-Duse_system_mesa=1"
-	fi
+        # enable this until it works.
+	#if ! use x86; then
+	#	myconf+="
+	#		-Duse_system_mesa=1"
+	#fi
 
 	# Optional dependencies.
 	# TODO: linux_link_kerberos, bug #381289.
