@@ -183,7 +183,7 @@ src_prepare() {
          
         epatch "${FILESDIR}/gpsd.patch"
         epatch "${FILESDIR}/system-ffmpeg.patch"
-	epatch_user
+        epatch_user
         
     echo LASTCHANGE=$webkit_reversion >  build/util/LASTCHANGE.blink
 
