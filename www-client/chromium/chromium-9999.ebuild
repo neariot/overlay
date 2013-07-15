@@ -131,17 +131,37 @@ src_unpack() {
 	gclient_config
 	gclient_sync
 
-	# Disabled so that we do not download nacl toolchain.
+	mkdir src/third_party/WebKit -p
+       
+        if [ -e src/third_party/WebKit/Source ] 
+          then svn update src/third_party/WebKit/Source
+        else
+        svn checkout https://src.chromium.org/blink/trunk/Source src/third_party/WebKit/Source
+        fi
+        
+        if [ -e src/third_party/WebKit/Tools ]
+          then svn update src/third_party/WebKit/Tools
+        else
+          svn checkout https://src.chromium.org/blink/trunk/Source src/third_party/WebKit/Tools
+        fi
+        
+        if [ -e src/third_party/WebKit/public ]
+          then svn update src/third_party/WebKit/public
+        else
+          svn checkout https://src.chromium.org/blink/trunk/Source src/third_party/WebKit/public
+        fi
+
+        # Disabled so that we do not download nacl toolchain.
 	#gclient_runhooks
 
 	# Remove any lingering nacl toolchain files.
 	rm -rf src/native_client/toolchain/linux_x86_newlib
-        export webkit_reversion=$(svn info src/third_party/WebKit | grep "Revision" | awk '{print $2}')
+        export webkit_reversion=$(svn info src/third_party/WebKit/Source | grep "Revision" | awk '{print $2}')
 	subversion_wc_info
         
 	mkdir -p "${S}" || die
 	einfo "Copying source to ${S}"
-	rsync -rlpgo --exclude=".svn/" --exclude="third_party/WebKit/LayoutTests/"  --exclude="third_party/WebKit/ManualTests/"  --exclude="third_party/WebKit/PerformanceTests/" src/ "${S}" || die
+	rsync -rlpgo --exclude=".svn/"  src/ "${S}" || die
 
 	# Display correct svn revision in about box, and log new version.
 	echo "LASTCHANGE=${ESVN_WC_REVISION}" > "${S}"/build/util/LASTCHANGE || die
