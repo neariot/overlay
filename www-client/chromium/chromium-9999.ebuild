@@ -142,13 +142,13 @@ src_unpack() {
         if [ -e src/third_party/WebKit/Tools ]
           then svn update src/third_party/WebKit/Tools
         else
-          svn checkout https://src.chromium.org/blink/trunk/Source src/third_party/WebKit/Tools
+          svn checkout https://src.chromium.org/blink/trunk/Tools src/third_party/WebKit/Tools
         fi
         
         if [ -e src/third_party/WebKit/public ]
           then svn update src/third_party/WebKit/public
         else
-          svn checkout https://src.chromium.org/blink/trunk/Source src/third_party/WebKit/public
+          svn checkout https://src.chromium.org/blink/trunk/public src/third_party/WebKit/public
         fi
 
         # Disabled so that we do not download nacl toolchain.
